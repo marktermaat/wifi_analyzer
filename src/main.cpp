@@ -32,25 +32,7 @@ void packet_handler(void *buf, wifi_promiscuous_pkt_type_t type)
   if (frame_type == WIFI_PKT_MISC) packet_type = "MISC";
 
   if (frame_type == WIFI_PKT_MGMT && frame_control->subtype == BEACON) {
-    const char *data = (char *) buf;
-    Serial.print("Full message ");
-    for (int i = 0; i < header.sig_len; i++)
-    {
-      Serial.print(data[i]);
-    }
-    Serial.println();
-
-    const uint8_t *payload = wifi_packet->payload;
-
-    Serial.print("Payload ");
-    for (int i = 0; i < 100; i++)
-    {
-      Serial.printf("%d ", data[i]);
-    }
-    Serial.println();
-
     const WifiBeaconFrame *beacon_frame = (WifiBeaconFrame *) wifi_packet->payload;
-    Serial.printf("Interval: %u, Capability: %u, tag: %d, tag_length: %d\n", beacon_frame->interval, beacon_frame->capability, beacon_frame->tag_number, beacon_frame->tag_length);
 
     char ssid[32] = {0};
 
