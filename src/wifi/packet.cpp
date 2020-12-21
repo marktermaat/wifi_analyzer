@@ -28,7 +28,13 @@ void process_packet(void *buf, wifi_promiscuous_pkt_type_t type)
 
   const PacketInformation packet_info = process_packet(wifi_packet, header.sig_len);
 
-  Serial.printf("| %s | %s | %s | %d | %s |\n", packet_info.ssid_name.c_str(), packet_info.device_mac.c_str(), packet_info.direction.c_str(), packet_info.total_bytes, packet_info.packet_type.c_str());
+  Serial.printf("| %s | %s | %s | %d | %s | %u |\n",
+                packet_info.ssid_name.c_str(),
+                packet_info.device_mac.c_str(),
+                packet_info.direction.c_str(),
+                packet_info.total_bytes,
+                packet_info.packet_type.c_str(),
+                packet_info.sequence_number);
 }
 
 std::string get_packet_type(WifiFrameControl *frame_control)
@@ -68,6 +74,7 @@ PacketInformation process_packet(WifiPacket *wifi_packet, uint16_t packet_size)
   WifiFrameControl *frame_control = (WifiFrameControl *)&frame_header->control;
 
   PacketInformation packet_info = PacketInformation();
+  packet_info.sequence_number = frame_header->sequence_ctrl;
   packet_info.total_bytes = packet_size;
   packet_info.packet_type = get_packet_type(frame_control);
 
