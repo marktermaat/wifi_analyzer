@@ -34,8 +34,7 @@ def serial_consumer(serial_client, queue):
 def init_logger():
   log_level_str = os.environ.get('LOG_LEVEL') or 'WARNING'
   log_level = getattr(logging, log_level_str)
-  logging.basicConfig(level=log_level)
-  # logging.basicConfig(filename='/var/log/wifi_analyzer.log', level=log_level)
+  logging.basicConfig(filename='/var/log/wifi_analyzer.log', level=log_level)
   logging.info('Wifi Analyzer logging started')
 
 # Opens the serial device client
