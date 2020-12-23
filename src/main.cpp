@@ -32,7 +32,7 @@ void setup_wifi_promiscuous_mode(int channel, wifi_promiscuous_cb_t handler)
 void setup()
 {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  Serial.begin(576000);
 
   setup_wifi_promiscuous_mode(4, &packet_handler);
 }
