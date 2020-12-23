@@ -5,14 +5,14 @@ import logging
 from queue import Queue 
 from threading import Thread 
 from datetime import datetime
-# from influxdb import InfluxDBClient
+from influxdb import InfluxDBClient
 
 # Main method and loop
 def main():
   init_logger()
 
   serial_client = open_serial_client()
-  # influxdb_client = open_influxdb_client()
+  influxdb_client = open_influxdb_client()
 
   queue = Queue()
 
@@ -23,8 +23,7 @@ def main():
     message = queue.get()
     data = convert_message_to_data(message)
     if data is None: continue
-    print(data)
-    # send_data_to_influxdb(influxdb_client, data)
+    send_data_to_influxdb(influxdb_client, data)
 
 def serial_consumer(serial_client, queue):
   while True:
